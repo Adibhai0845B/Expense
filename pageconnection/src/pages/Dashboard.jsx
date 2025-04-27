@@ -18,7 +18,7 @@ const Dashboard = () => {
   }, []);
 
   const fetchExpenses = () => {
-    fetch("http://localhost:5000/api/expenses", {
+    fetch("https://expensebackendfull.onrender.com/api/expenses", {
       method: "GET",
       credentials: "include",
     })
@@ -28,7 +28,7 @@ const Dashboard = () => {
   };
 
   const fetchSummary = () => {
-    fetch("http://localhost:5000/api/expenses/summary/monthly", {
+    fetch("https://expensebackendfull.onrender.com/api/expenses/summary/monthly", {
       method: "GET",
       credentials: "include",
     })
@@ -47,7 +47,7 @@ const Dashboard = () => {
       return;
     }
     setIsLoading(true);
-    fetch("http://localhost:5000/api/expenses", {
+    fetch("https://expensebackendfull.onrender.com/api/expenses", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       credentials: "include",
@@ -76,7 +76,7 @@ const Dashboard = () => {
       return;
     }
     setIsLoading(true);
-    fetch(`http://localhost:5000/api/expenses/${currentExpense._id}`, {
+    fetch(`https://expensebackendfull.onrender.com/api/expenses/${currentExpense._id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       credentials: "include",
@@ -101,7 +101,7 @@ const Dashboard = () => {
 
   const handleDelete = (id) => {
     if (!window.confirm("Are you sure you want to delete this expense?")) return;
-    fetch(`http://localhost:5000/api/expenses/delete/${id}`, {
+    fetch(`https://expensebackendfull.onrender.com/api/expenses/delete/${id}`, {
       method: "DELETE",
       credentials: "include",
     })
@@ -132,7 +132,7 @@ const Dashboard = () => {
   };
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/expenses/api/user", { withCredentials: true })
+      .get("https://expensebackendfull.onrender.com/api/expenses/api/user", { withCredentials: true })
       .then((response) => {
         setUsername(response.data.username);
       })

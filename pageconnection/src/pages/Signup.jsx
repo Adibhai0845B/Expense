@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
 export default function Signup() {
   const [formData, setFormData] = useState({
     name: "",
@@ -17,9 +16,9 @@ export default function Signup() {
   const handleSignup = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:5000/api/auth/signup", formData);
+      await axios.post("https://expensebackendfull.onrender.com/api/auth/signup", formData);
       alert("Signup Successful! Please login.");
-      navigate("/"); // Redirect to login page
+      navigate("/");
     } catch (err) {
       alert(err.response.data.error || "Signup failed");
     }
