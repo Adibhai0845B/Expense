@@ -273,7 +273,7 @@ const Dashboard = () => {
               });
               return (
                 <li key={idx} className="mb-1 font-medium">
-                  {monthName}: ₹{totalAmount}
+                  {monthName}:₹{totalAmount}
                 </li>
               );
             })
