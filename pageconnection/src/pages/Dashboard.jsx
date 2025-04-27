@@ -94,7 +94,7 @@ const Dashboard = () => {
       })
       .catch((err) => {
         console.error("Error updating expense:", err);
-        alert("Failed to update expense. Please try again.");
+        alert("Failed to edit and is is update expense. Please try again.");
       })
       .finally(() => setIsLoading(false));
   };
