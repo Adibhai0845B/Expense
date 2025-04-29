@@ -6,7 +6,11 @@ const app = express();
 const cookieParser = require("cookie-parser");
 app.use(cookieParser());
 app.use(express.json());
-const allowedOrigins = ["http://localhost:5174","https://expense-frontend-5kf0.onrender.com","https://expense-two-mauve.vercel.app/"];
+const allowedOrigins = [
+  "http://localhost:5174",
+  "https://expense-frontend-5kf0.onrender.com",
+  "https://expense-two-mauve.vercel.app"
+];
 app.use(
   cors({
     origin: function (origin, callback) {
