@@ -130,7 +130,7 @@ const Dashboard = () => {
     setFormState({ amount: "", description: "", type: "give" });
     setCurrentExpense(null);
   };
-  useEffect(() => {
+  /*useEffect(() => {
     axios
       .get("https://expensebackendfull.onrender.com/api/expenses/api/user", { withCredentials: true })
       .then((response) => {
@@ -139,7 +139,7 @@ const Dashboard = () => {
       .catch((err) => {
         setError("Failed to fetch user data.");
       });
-  }, []);
+  }, []);*/
   return (
     <div className="min-h-screen pb-16 bg-gradient-to-br from-gray-50 via-blue-50 to-purple-100">
       <div className="py-16 mb-6 text-center text-white shadow-lg bg-gradient-to-r from-purple-600 via-pink-500 to-red-500 rounded-b-3xl">
@@ -152,8 +152,7 @@ const Dashboard = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.6 }}
-      >     <h1 className="mr-96">This is my username  {username}</h1>
-
+      > 
         <div className="flex items-center justify-center gap-2 mb-4">
           <Sparkles className="text-blue-500 animate-pulse" size={28} />
           <h1 className="text-4xl font-bold tracking-tight text-center">Expense Tracker</h1>

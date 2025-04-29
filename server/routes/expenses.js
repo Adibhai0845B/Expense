@@ -130,7 +130,7 @@ router.get("/summary/monthly", async (req, res) => {
     res.status(500).json({ error: "Server error" });
   }
 });
-router.get("/api/user", authenticate, async (req, res) => {
+/*router.get("/api/user", authenticate, async (req, res) => {
   try {
     const user = await User.findById(req.user);
     if (!user) return res.status(404).json({ error: "User not found" });
@@ -138,6 +138,6 @@ router.get("/api/user", authenticate, async (req, res) => {
   } catch (err) {
     res.status(500).json({ error: "Error fetching user" });
   }
-});
+});*/
 
 module.exports = router;
