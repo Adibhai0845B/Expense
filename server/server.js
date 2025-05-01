@@ -9,7 +9,8 @@ app.use(express.json());
 const allowedOrigins = [
   "http://localhost:5174",
   "https://expense-frontend-5kf0.onrender.com",
-  "https://expense-two-mauve.vercel.app"
+  "https://expense-two-mauve.vercel.app",
+  "https://expensebackendfull.onrender.com"
 ];
 app.use(
   cors({
