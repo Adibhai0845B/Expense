@@ -23,7 +23,14 @@ const Dashboard = () => {
       credentials: "include",
     })
       .then((res) => res.json())
-      .then((data) => setExpenses(data))
+      .then((data) => {
+        if (Array.isArray(data)) {
+          setExpenses(data);
+        } else {
+          console.error("Expenses data is not an array:", data);
+          setExpenses([]);
+        }
+      })
       .catch((err) => console.error("Error fetching expenses:", err));
   };
 
