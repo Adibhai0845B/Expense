@@ -45,7 +45,7 @@ router.post("/", authenticate, async (req, res) => {
     if (!mentionedUser) {
       return res.status(404).json({ error: "Mentioned user not found" });
     }
-    const sharedAmount = amount / 2;
+    const sharedAmount = amount/2;
     const currentUserTxn = new Transaction({
       user: req.user,
       amount: sharedAmount,
