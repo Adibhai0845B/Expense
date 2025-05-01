@@ -262,6 +262,28 @@ const Dashboard = () => {
           ))}
         </motion.div>
         <h2 className="mt-10 mb-2 text-2xl font-semibold">📊 Monthly Summary</h2>
+        <motion.ul
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="p-6 mt-6 border shadow-xl backdrop-blur-md bg-white/60 rounded-2xl"
+        >
+          {summary.length === 0 ? (
+            <li className="text-gray-500">No summary data available.</li>
+          ) : (
+            summary.map((item, idx) => {
+              const totalAmount = item.summary.reduce((acc, curr) => acc + curr.total, 0);
+              const monthName = new Date(item._id.year, item._id.month - 1).toLocaleString("default", {
+                month: "long",
+              });
+              return (
+                <li key={idx} className="mb-1 font-medium">
+                  {monthName}:₹{totalAmount}
+                </li>
+              );
+            })
+          )}
+        </motion.ul>
       </motion.div>
     </div>
   );
