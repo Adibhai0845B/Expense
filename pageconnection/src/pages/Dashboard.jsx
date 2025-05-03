@@ -3,6 +3,7 @@ import Card from "../components/Card";
 import { motion } from "framer-motion";
 import { Sparkles } from "lucide-react";
 import axios from "axios";
+
 const Dashboard = () => {
   const [formState, setFormState] = useState({ amount: "", description: "", type: "give" });
   const [expenses, setExpenses] = useState([]);
@@ -12,6 +13,7 @@ const Dashboard = () => {
   const [currentExpense, setCurrentExpense] = useState(null);
   const [username, setUsername] = useState("");
   const [error, setError] = useState(null);
+
   useEffect(() => {
     fetchExpenses();
     fetchSummary();
@@ -22,8 +24,19 @@ const Dashboard = () => {
       method: "GET",
       credentials: "include",
     })
-      .then((res) => res.json())
+      .then((res) => {
+        if (res.status === 401) {
+          setError("Unauthorized access. Please login.");
+          setExpenses([]);
+          return null;
+        }
+        if (!res.ok) {
+          throw new Error("Failed to fetch expenses");
+        }
+        return res.json();
+      })
       .then((data) => {
+        if (data === null) return;
         if (Array.isArray(data)) {
           setExpenses(data);
         } else {
@@ -31,7 +44,13 @@ const Dashboard = () => {
           setExpenses([]);
         }
       })
-      .catch((err) => console.error("Error fetching expenses:", err));
+      .catch((err) => {
+        if (err.message === "Failed to fetch") {
+          console.error("Network error fetching expenses:", err);
+        } else {
+          console.error("Error fetching expenses:", err);
+        }
+      });
   };
 
   const fetchSummary = () => {
@@ -40,10 +59,16 @@ const Dashboard = () => {
       credentials: "include",
     })
       .then((res) => {
+        if (res.status === 401) {
+          setError("Unauthorized access. Please login.");
+          return null;
+        }
         if (!res.ok) throw new Error("Failed to fetch monthly summary");
         return res.json();
       })
-      .then((data) => setSummary(data))
+      .then((data) => {
+        if (data) setSummary(data);
+      })
       .catch((err) => console.error("Error fetching summary:", err));
   };
 
@@ -61,6 +86,10 @@ const Dashboard = () => {
       body: JSON.stringify({ amount: Number(amount), description, type }),
     })
       .then((res) => {
+        if (res.status === 401) {
+          setError("Unauthorized access. Please login.");
+          return null;
+        }
         if (!res.ok) throw new Error("Failed to add expense");
         return res.json();
       })
@@ -90,6 +119,10 @@ const Dashboard = () => {
       body: JSON.stringify({ amount: Number(amount), description, type }),
     })
       .then((res) => {
+        if (res.status === 401) {
+          setError("Unauthorized access. Please login.");
+          return null;
+        }
         if (!res.ok) throw new Error("Failed to update expense");
         return res.json();
       })
@@ -101,7 +134,7 @@ const Dashboard = () => {
       })
       .catch((err) => {
         console.error("Error updating expense:", err);
-        alert("Failed to edit and is is update expense. Please try again.");
+        alert("Failed to update expense. Please try again.");
       })
       .finally(() => setIsLoading(false));
   };
@@ -113,6 +146,10 @@ const Dashboard = () => {
       credentials: "include",
     })
       .then((res) => {
+        if (res.status === 401) {
+          setError("Unauthorized access. Please login.");
+          return null;
+        }
         if (!res.ok) throw new Error("Failed to delete expense");
         return res.json();
       })
@@ -137,6 +174,7 @@ const Dashboard = () => {
     setFormState({ amount: "", description: "", type: "give" });
     setCurrentExpense(null);
   };
+
   /*useEffect(() => {
     axios
       .get("https://expensebackendfull.onrender.com/api/expenses/api/user", { withCredentials: true })
@@ -147,6 +185,7 @@ const Dashboard = () => {
         setError("Failed to fetch user data.");
       });
   }, []);*/
+
   return (
     <div className="min-h-screen pb-16 bg-gradient-to-br from-gray-50 via-blue-50 to-purple-100">
       <div className="py-16 mb-6 text-center text-white shadow-lg bg-gradient-to-r from-purple-600 via-pink-500 to-red-500 rounded-b-3xl">
@@ -159,7 +198,7 @@ const Dashboard = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.6 }}
-      > 
+      >
         <div className="flex items-center justify-center gap-2 mb-4">
           <Sparkles className="text-blue-500 animate-pulse" size={28} />
           <h1 className="text-4xl font-bold tracking-tight text-center">Expense Tracker</h1>
@@ -288,4 +327,5 @@ const Dashboard = () => {
     </div>
   );
 };
+
 export default Dashboard;

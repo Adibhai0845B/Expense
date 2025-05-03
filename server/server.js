@@ -3,13 +3,13 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 require("dotenv").config();
 const app = express();
-const cookieParser = require("cookie-parser");
+const cookieParser=require("cookie-parser");
 app.use(cookieParser());
 app.use(express.json());
-const allowedOrigins = [
+const allowedOrigins=[
   "http://localhost:5174",
+  "http://localhost:5173",
   "https://expense-frontend-5kf0.onrender.com",
-  "https://expense-two-mauve.vercel.app",
   "https://expensebackendfull.onrender.com"
 ];
 app.use(

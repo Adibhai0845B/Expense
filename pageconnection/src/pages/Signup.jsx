@@ -16,7 +16,7 @@ export default function Signup() {
   const handleSignup = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("https://expensebackendfull.onrender.com/api/auth/signup", formData);
+      await axios.post("https://expensebackendfull.onrender.com/api/auth/signup", formData, { withCredentials: true });
       alert("Signup Successful! Please login.");
       navigate("/");
     } catch (err) {
