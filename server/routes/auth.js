@@ -14,7 +14,7 @@ const getCookieOptions = () => {
 };
 const otpStore = {};
 const generateOTP = () => {
-  return Math.floor(100000 + Math.random() * 900000).toString(); // 6 digit OTP
+  return Math.floor(100000 + Math.random() * 900000).toString();
 };
 const sendOTPEmail = async (email, otp) => {
   const transporter = nodemailer.createTransport({
@@ -32,7 +32,12 @@ const sendOTPEmail = async (email, otp) => {
     text: `Your OTP code is ${otp}. It will expire in 10 minutes.`,
   };
 
-  await transporter.sendMail(mailOptions);
+  try {
+    await transporter.sendMail(mailOptions);
+  } catch (error) {
+    console.error("Error sending OTP email:", error);
+    throw error;
+  }
 };
 
 router.post("/signup", async (req, res) => {
@@ -72,8 +77,8 @@ router.post("/request-otp", async (req, res) => {
     }
     const otp = generateOTP();
     const expiresAt = new Date(Date.now() + 10 * 60 * 1000);
-    otpStore[email] = { otp, expiresAt };
-    await sendOTPEmail(email, otp);
+    otpStore[email] = { otp,expiresAt};
+    await sendOTPEmail(email,otp);
     console.log(`OTP sent to ${email}: ${otp}`);
     res.status(200).json({ message: "OTP sent to email" });
   } catch (err) {
