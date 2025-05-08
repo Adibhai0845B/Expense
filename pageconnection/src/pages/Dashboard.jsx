@@ -85,12 +85,15 @@ const Dashboard = () => {
       credentials: "include",
       body: JSON.stringify({ amount: Number(amount), description, type }),
     })
-      .then((res) => {
+      .then(async (res) => {
         if (res.status === 401) {
           setError("Unauthorized access. Please login.");
           return null;
         }
-        if (!res.ok) throw new Error("Failed to add expense");
+        if (!res.ok) {
+          const errorData = await res.json();
+          throw new Error(errorData.error || "Failed to add expense");
+        }
         return res.json();
       })
       .then(() => {
@@ -100,7 +103,7 @@ const Dashboard = () => {
       })
       .catch((err) => {
         console.error("Error adding expense:", err);
-        alert("Failed to add expense. Please try again.");
+        alert(`Failed to add expense: ${err.message}`);
       })
       .finally(() => setIsLoading(false));
   };
