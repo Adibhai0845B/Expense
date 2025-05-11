@@ -14,7 +14,6 @@ export default function Login() {
     e.preventDefault();
     try {
       if (useOtpLogin) {
-        // Verify OTP login
         await axios.post(
           "https://expensebackendfull.onrender.com/api/auth/verify-otp",
           { email, otp },
